@@ -20,4 +20,14 @@ class Level {
             pickup.render(ctx, camera);
         });*/
     }
+
+    //generates and returns a level
+    generateLevel() {
+        //generate tilemap
+            //generate rooms, hallways, .. domes?
+            //find player entrance
+            //add player exit
+        //apply enemies
+        //add pickups
+    }
 }
