@@ -24,8 +24,8 @@ function setup() {
 
 
     //initialize player
-//    const player = new Player(tileWidth*3, tileHeight*3, 100, Direction.RIGHT, "MOVE", new Spritesheet(noobSheet, 150, 4, 0, true));
-    const player = new Player(new Noob(3, 3, 100, Direction.RIGHT, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
+//    const player = new Player(x, y, 100, Direction.RIGHT, "MOVE", new Spritesheet(noobSheet, 150, 4, 0, true));
+    const player = new Player(new Noob(17, 39, 100, Direction.RIGHT, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
 
     //initialize camera
     const camera = new Camera(player);
@@ -45,7 +45,8 @@ function gameLoop(canvas, ctx, camera, player, level) {
     //update player
     player.update(level);
     
-    //update enemies
+    //update level components - enemies, triggers and so on
+    level.update(player);
 
     //update camera
     camera.update();

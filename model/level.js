@@ -5,10 +5,17 @@ class Level {
         //place pickups
         //place start pos
         //place exit
-        this.tilemap = new Tilemap(10, 10);
+        this.tilemap = new Tilemap(40, 40);
         this.enemies = [];
         this.pickups = [];
         this.triggers = [];
+        this.triggers.push(new Teleporter(2, 1, 1, 8, 7, 1));
+    }
+
+    update(player) {
+        this.triggers.forEach(trigger => {
+            trigger.update(player);
+        });
     }
 
     render(ctx, camera) {
@@ -19,15 +26,17 @@ class Level {
         this.pickups.forEach(pickup => {
             pickup.render(ctx, camera);
         });*/
+        this.triggers.forEach(trigger => trigger.render(ctx, camera));
     }
 
     //generates and returns a level
-    generateLevel() {
+   /* generateLevel() {
         //generate tilemap
+        this.tilemap.generate();
             //generate rooms, hallways, .. domes?
             //find player entrance
             //add player exit
         //apply enemies
         //add pickups
-    }
+    }*/
 }
