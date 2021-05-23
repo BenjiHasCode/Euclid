@@ -5,11 +5,11 @@ class Level {
         //place pickups
         //place start pos
         //place exit
-        this.tilemap = new Tilemap(40, 40);
+        this.tilemap = new Tilemap(10, 4)//40, 40);
         this.enemies = [];
         this.pickups = [];
         this.triggers = [];
-        this.triggers.push(new Teleporter(2, 1, 1, 8, 7, 1));
+       // this.triggers.push(new Teleporter(2, 1, 1, 8, 7, 1));
     }
 
     update(player) {

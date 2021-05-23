@@ -81,7 +81,7 @@ class Character extends Entity{
             this.goal = this.y-1;
 
             //see if goal is valid
-            if (level.tilemap.getTile(1, Math.floor(this.x), Math.floor(this.goal)) != 0) {
+            if (level.tilemap.getTile(1, this.x, this.goal) != 0) {
                 this.goal = undefined;
                 this.state = CharacterState.IDLE;
             }
@@ -105,7 +105,7 @@ class Character extends Entity{
             this.goal = this.y+1;
 
             //see if goal is valid
-            if (level.tilemap.getTile(1, Math.floor(this.x), Math.floor(this.goal)) != 0) {
+            if (level.tilemap.getTile(1, this.x, this.goal) != 0) {
                 this.goal = undefined;
                 this.state = CharacterState.IDLE;
             }
@@ -129,7 +129,7 @@ class Character extends Entity{
             this.goal = this.x-1;
 
             //see if goal is valid
-            if (level.tilemap.getTile(1, Math.floor(this.goal), Math.floor(this.y)) != 0) {
+            if (level.tilemap.getTile(1, this.goal, this.y) != 0) {
                 this.goal = undefined;
                 this.state = CharacterState.IDLE;
             }
@@ -153,7 +153,8 @@ class Character extends Entity{
             this.goal = this.x + 1;
 
             //see if goal is valid
-            if (level.tilemap.getTile(1, Math.floor(this.goal), Math.floor(this.y)) != 0) {
+            console.log(level.tilemap.getTile(1, this.goal, this.y));
+            if (level.tilemap.getTile(1, this.goal, this.y) != 0) {
                 this.goal = undefined;
                 this.state = CharacterState.IDLE;
             }

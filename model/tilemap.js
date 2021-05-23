@@ -3,12 +3,12 @@ let tileWidth;
 let tileHeight;
 
 class Tilemap {
-    constructor(cols, rows) {
+    constructor(width, height) {
         //map dimensions
-        this.cols = cols;
-        this.rows = rows;
+        this.width = width;
+        this.height = height;
 
-        //layers is a 2d array containing info on the tilemap
+        //layers is an array containing info on the tilemap (visual and logical)
         this.layers =
             //visual layer - contains info on which tile should be placed on each position in the grid
             [[                                                                                                                          //  x
@@ -100,19 +100,19 @@ class Tilemap {
             ]];
 
             //initialize level arrays
-            for(let i = 0; i < rows * cols; i++) {
+            for(let i = 0; i < width * height; i++) {
                 //we just fill both layers with 0 so they are "empty"
                 this.layers[0].push(0);
                 this.layers[1].push(0);
             }
 
             //create boundary around world
-            for(let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    if (i == 0 || j == 0 || i == rows-1 || j == cols-1) {
+            for(let i = 0; i < width; i++) {
+                for (let j = 0; j < height; j++) {
+                    if (i == 0 || j == 0 || i == width-1 || j == height-1) {
                         //temp visual
-                        this.layers[0][i * this.cols + j] = 1;
-                        this.layers[1][i * this.cols + j] = 1;
+                        this.setTile(0, i, j, 1);
+                        this.setTile(1, i, j, 1);
                     }
                 }
             }
@@ -120,25 +120,32 @@ class Tilemap {
     }
 
     //accesses a 1d array as if it was a 2d array
-    getTile(layer, row, col) {
-        return this.layers[layer][row * this.cols + col];
+    getTile(layer, x, y) {
+        return this.layers[layer][x + this.width * y];
+    }
+    setTile(layer, x, y, value) {
+        this.layers[layer][x + this.width * y] = value;
     }
 
     render(ctx, camera) {
-        for(let i = 0; i < this.rows; i++) {
-            for(let j = 0; j < this.cols; j++) {
+        for(let i = 0; i < this.width; i++) {
+            for(let j = 0; j < this.height; j++) {
                 const xPosition = tileWidth * i - camera.x;
                 const yPosition = tileHeight * j - camera.y;
 
                 switch(this.getTile(0, i, j)) {
+                    //wooden floor
                     case 1:
                         //ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
                         ctx.drawImage(tempy, xPosition, yPosition, tileWidth, tileHeight);
                         break;
+                    //brick floor
                     case 2:
                         break;
+                    //brick wall
                     case 3:
                         break;
+                    
                     case 4:
                         break;
 /*                    default:
