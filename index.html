@@ -11,6 +11,10 @@
             padding: 0;
             overflow: hidden;
         }
+
+        #controls {
+            position: absolute;
+        }
     </style>
     <!--MODEL-->
     <script src="model/tilemap.js" defer></script>
@@ -25,12 +29,17 @@
     <!--UTIL-->
     <script src="util/canvasUtil.js" defer></script>
     <script src="util/direction.js" defer></script>
-    <script src="util/input.js"></script>
-    <script src="util/state.js"></script>
+    <script src="util/input.js" defer></script>
+    <script src="util/state.js" defer></script>
+    <script src="util/debug.js" defer></script>
     <!--MAIN GAME-->
     <script src="firstFantasy.js" defer></script>
 </head>
 <body>
+    <div id="controls">
+        <button id="debugButton">Debug</button>
+        <input type="range" id="cameraSlider" max=10 value=1 min=.5 step=.1 hidden>
+    </div>
     <canvas id="canvas"></canvas>
 </body>
 </html>

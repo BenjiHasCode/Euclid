@@ -26,7 +26,10 @@ class Level {
         this.pickups.forEach(pickup => {
             pickup.render(ctx, camera);
         });*/
-        this.triggers.forEach(trigger => trigger.render(ctx, camera));
+
+        //render triggers if debug is enabled
+        if (debug)
+            this.triggers.forEach(trigger => trigger.render(ctx, camera));
     }
 
     //generates and returns a level

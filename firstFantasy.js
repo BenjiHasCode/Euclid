@@ -25,7 +25,7 @@ function setup() {
 
     //initialize player
 //    const player = new Player(x, y, 100, Direction.RIGHT, "MOVE", new Spritesheet(noobSheet, 150, 4, 0, true));
-    const player = new Player(new Noob(17, 39, 100, Direction.RIGHT, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
+    const player = new Player(new Noob(1, 1, 100, Direction.RIGHT, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
 
     //initialize camera
     const camera = new Camera(player);

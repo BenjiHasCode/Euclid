@@ -1,6 +1,6 @@
 //how many tiles our camera will display in width and height
-const tileWidthView = 9*2;
-const tileHeightView = 5*2;
+let tileWidthView = 9;
+let tileHeightView = 5;
 
 class Camera extends Entity {
     constructor(target) {
