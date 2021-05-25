@@ -137,16 +137,37 @@ class Tilemap {
                     //wooden floor
                     case 1:
                         //ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-                        ctx.drawImage(tempy, xPosition, yPosition, tileWidth, tileHeight);
+                        ctx.drawImage(floorSheet, 16*8/*12*/, 16*19/*18*/, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
                         break;
                     //brick floor
                     case 2:
+                        ctx.drawImage(floorSheet, 16, 16*7/*18*/, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
                         break;
-                    //brick wall
+                    //brick wall top left corner
                     case 3:
+                        ctx.drawImage(wallSheet, 0, 16*3, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
                         break;
-                    
+                    //brick wall top
                     case 4:
+                        ctx.drawImage(wallSheet, 16, 16*3, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
+                        break;
+                    //brick wall top right corner
+                    case 5:
+                        ctx.drawImage(wallSheet, 16*2, 16*3, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
+                        break;
+                    //brick wall vertical
+                    case 6:
+                        ctx.drawImage(wallSheet, 0, 16*4, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
+                        break;
+                    //brick wall south-west corner
+                    case 7:
+                        ctx.drawImage(wallSheet, 0, 16*5, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
+                        break;
+                    //brick wall south-east corner
+                    case 8:
+                        ctx.drawImage(wallSheet, 16*2, 16*5, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
+                        break;
+                    case 9:
                         break;
 /*                    default:
                         ctx.fillRect(tileWidth*i-camera.x, tileHeight*j-camera.y, tileWidth, tileHeight)
@@ -179,19 +200,82 @@ class Tilemap {
     }*/
 
     //generate room based on a position and width/height
-    generateRoom(x, y, width, height) {
-        for (i = 0; i < width; i++) {
-            for (j = 0; j < height; j++) {
-                //visual
-                this.getTile(0, x+i, y+j) = 0; //TODO LATER
-                //logic
+    createRoom(x, y, width, height) {
+        for (let i = -1; i <= width; i++) {
+            for (let j = -1; j <= height; j++) {
+                //if i == -1 || i == width - create boundary
+                if(i == -1 || i == width) {
+                    if(j == -1 && i == -1) {
+                        this.setTile(0, x+i, y+j, 3);
+                    } else if (i == width && j == -1) {
+                        this.setTile(0, x+i, y+j, 5);
+                    } else if (j >= 0 && j < height) {
+                        this.setTile(0, x+i, y+j, 6);
+                    } else if (i == -1 && j == height) {
+                        this.setTile(0, x+i, y+j, 7);
+                    } else if (i == width && j == height) {
+                        this.setTile(0, x+i, y+j, 8);
+                    }
 
+
+                    this.setTile(1, x+i, y+j, 1)
+                }else if (j == height && i >= 0 && i < width) {
+                    this.setTile(0, x+i, y+j, 4);
+                    this.setTile(1, x+i, y+j, 1);
+                } else {
+                    if (j == -1) {
+                        //set wall
+                        this.setTile(0, x+i, y+j, 4)
+                    } else if (j != height)
+                        //set floor
+                        this.setTile(0, x+i, y+j, 1)
+                }
+
+                //create y boundary
+                if(j == -1 || j == height) {
+                    this.setTile(1, x+i, y+j, 1);
+                }
             }
         }
     }
 
     //generate hallway on a position and width/height
-    generateHallway(x, y, width, height) {
+    createVerticalHallway(x, y, width, height) {
+        for (let i = -1; i <= width; i++) {
+            for (let j = 0; j < height; j++) {
+                //if i == -1 || i == width - create boundary
+                if(i == -1 || i == width) {
+                    this.setTile(0, x+i, y+j, 6);
+                    this.setTile(1, x+i, y+j, 1);
+                } 
+                //else set visual tile and make sure logic tile is empty
+                else {
+                    this.setTile(0, x+i, y+j, 2);
+                    this.setTile(1, x+i, y+j, 0);
+                }
+                    //include boundary checks?
+            }
+        }
 
+    }
+
+    createHorizontalHallway(x, y, width, height) {
+        for (let i = 0; i < width; i++) {
+            for (let j = -1; j <= height; j++) {
+                //if j == -1 || j == height create boundary and wall tile
+                if (j == -1 || j == height) {
+                    this.setTile(0, x+i, y+j, 4);
+                    this.setTile(1, x+i, y+j, 1);
+                }
+                //else set visual tile and make sure logic tile is set to empty
+                else {
+                    this.setTile(0, x+i, y+j, 2);
+                    this.setTile(1, x+i, y+j, 0);
+                }
+                //else if j == height - create boundary
+                //else set visual tile to floor
+                    //include x, y boundary checks?
+            }
+        }
     }
 }

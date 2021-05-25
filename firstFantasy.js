@@ -11,9 +11,7 @@ function setup() {
     //load files
     tempy.src = "assets/visual/tempy.png";
     noobSheet.src = "assets/visual/Noob.png";
-    mageSheet.src = "assets/visual/Mage.png";
     rogueSheet.src = "assets/visual/Rogue.png";
-    warriorSheet.src = "assets/visual/Warrior.png";
     GUISheet.src = "assets/visual/GUI0.png";
     floorSheet.src = "assets/visual/Floor.png";
     wallSheet.src = "assets/visual/Wall.png";
@@ -25,7 +23,7 @@ function setup() {
 
     //initialize player
 //    const player = new Player(x, y, 100, Direction.RIGHT, "MOVE", new Spritesheet(noobSheet, 150, 4, 0, true));
-    const player = new Player(new Noob(1, 1, 100, Direction.RIGHT, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
+    const player = new Player(new Noob(39, 78, 100, Direction.UP, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
 
     //initialize camera
     const camera = new Camera(player);

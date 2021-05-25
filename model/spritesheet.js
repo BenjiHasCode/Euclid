@@ -1,7 +1,5 @@
 let noobSheet = new Image();
-let mageSheet = new Image();
 let rogueSheet = new Image();
-let warriorSheet = new Image();
 let GUISheet = new Image();
 let floorSheet = new Image();
 let wallSheet = new Image();
