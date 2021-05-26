@@ -1,6 +1,8 @@
 //call setup
 window.addEventListener("load", setup);
 let deltaTime = Date.now();
+let gameState = GameState.PLAY;
+
 
 //load game files
 function setup() {
@@ -38,26 +40,39 @@ function setup() {
     gameLoop(canvas, ctx, camera, player, level);
 }
 
+const d = new Dialogue("Hello, \nWorld!", TextSpeed.SLOW);
+
 
 function gameLoop(canvas, ctx, camera, player, level) {
-    //update player
-    player.update(level);
-    
-    //update level components - enemies, triggers and so on
-    level.update(player);
+    //if gamestate is not dialogue - update game as normal
+    if (gameState != GameState.DIALOGUE) {
+        //update player
+        player.update(level);
+            
+        //update level components - enemies, triggers and so on
+        level.update(player);
 
-    //update camera
-    camera.update();
+        //update camera
+        camera.update();
 
-    //draw
-    render(canvas, ctx, camera, player, level);
+        //draw
+        render(canvas, ctx, camera, player, level);
+    }
+    //else update dialogue message
+    else {
+        //if dialogue update returns false dialogue is done
+        if(!d.update()) {
+            gameState = GameState.PLAY;
+        }
+    }
 
     //update deltaTime
     deltaTime = Date.now();
 
     requestAnimationFrame(()=> gameLoop(canvas, ctx, camera, player, level));
 }
-const d = new Dialogue("Hello, World!", TextSpeed.FAST);
+
+
 function render(canvas, ctx, camera, player, level) {
     ctx.imageSmoothingEnabled = false;
     //clear
@@ -71,7 +86,7 @@ function render(canvas, ctx, camera, player, level) {
 
     //test dialogue
 
-    d.render(ctx);
+    d.render(canvas, ctx);
 }
 
 

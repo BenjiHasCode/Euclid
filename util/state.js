@@ -8,6 +8,7 @@ Object.freeze(CharacterState);
 
 const GameState = {
     MENU: 1,
-    PLAY: 2
+    PLAY: 2,
+    DIALOGUE: 3
 }
 Object.freeze(GameState);

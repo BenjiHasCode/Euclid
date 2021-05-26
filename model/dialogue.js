@@ -6,34 +6,14 @@ const TextSpeed = {
 
 class Dialogue {
     constructor(message, speed) {
-        this.message = message;
+        //we split the message into lines
+        this.message = message.split("\n");
         this.speed = speed;
         this.lastUpdate = Date.now();
         this.index = 0; //we are at the start of text
     }
 
-    render(ctx) {
-        //first we declare the variables for our dialogue box
-        const sX = 16;          //s = source (where in the source material)
-        const sY = 16*7;
-        const sWidth = 16*3;
-        const sHeight = 16*3;
-        const dX = tileWidth / 2;   //we'll draw 1/2 tile in and 1/2 tile "up" (technically down :P)
-        const dY = tileHeight / 2;  //d = destination (where we'll draw on the canvas)
-        const dWidth = tileWidth * (tileWidthView - 1);
-        const dHeight = tileHeight * (tileHeightView - 1);
-        //draw box
-        ctx.drawImage(GUISheet, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
-
-        //draw text
-        ctx.save();
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "white";
-        const partMessage = this.message.substring(0, this.index);
-        ctx.fillText(partMessage, dX + tileWidth/2, dY + tileHeight * .6);
-        ctx.restore();
-
-
+    update() {
         //increment counter
         if (Date.now() - this.lastUpdate >= this.speed) {
             if (this.index < this.message.length) {
@@ -41,5 +21,67 @@ class Dialogue {
                 this.lastUpdate = Date.now();
             }
         }
+
+        //check if player is trying to "skip" dialogue
+        if(spacePressed) {
+            if(this.index < this.message.length) {
+                this.index = this.message.length;
+            } 
+            //if entire text is displayed, and space is pressed, exit dialogue
+            else {
+                return false;
+            }
+        }
+    }
+
+    render(canvas, ctx) {
+        //first we declare the variables for our dialogue box
+        const sX = 16;          //s = source (where in the source material)
+        const sY = 16*7;
+        const sWidth = 16*3;
+        const sHeight = 16*3;
+        const dX = canvas.width * .1;
+        const dY = canvas.height * .1;  //d = destination (where we'll draw on the canvas)
+        const dWidth = canvas.width * .8;
+        const dHeight = canvas.height * .8;
+        //draw box
+        ctx.drawImage(GUISheet, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
+
+        //draw text
+        ctx.save();
+        const textSize;
+
+        //find max indec
+        let messageLength;
+        this.message.foreach(text, ()=> messageLength += text.length);
+
+
+        if (canvas.width * .8 < canvas.height * .1)
+            textSize = canvas.width * .8;
+        else
+            textSize = canvas.height * .1;
+
+        ctx.font = "bold " + textSize + "px Arial";
+
+
+        ctx.textBaseline = "top";   //makes the text appear under the x, y coordinate (normally it appears above (which is problematic if the font size change))
+        ctx.fillStyle = "white";
+
+        let tempDex = this.index;
+        //write the strings
+        for(let i = 0; i < this.message.length; i++) {
+            if (this.tempDex >= this.message[i].length) {
+                ctx.fillText(this.message[i], dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
+               // this.tempDex -= this.message[i].length;
+            } else {
+                const partMessage = this.message.substring(0, this.index);
+                ctx.fillText(partMessage, dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
+            }
+            this.tempDex -= this.message[i].length;
+
+        }
+
+        
+        ctx.restore();
     }
 }
