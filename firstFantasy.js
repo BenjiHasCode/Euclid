@@ -57,7 +57,7 @@ function gameLoop(canvas, ctx, camera, player, level) {
 
     requestAnimationFrame(()=> gameLoop(canvas, ctx, camera, player, level));
 }
-
+const d = new Dialogue("Hello, World!", TextSpeed.FAST);
 function render(canvas, ctx, camera, player, level) {
     ctx.imageSmoothingEnabled = false;
     //clear
@@ -68,6 +68,10 @@ function render(canvas, ctx, camera, player, level) {
     
     //draw player
     player.render(ctx, camera);
+
+    //test dialogue
+
+    d.render(ctx);
 }
 
 
