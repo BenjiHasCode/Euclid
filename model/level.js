@@ -37,9 +37,13 @@ class Level {
         
         this.interactables = [];
         this.triggers = [];
+        //triggers mostly teleporters
         this.triggers.push(new Teleporter(63, 76, 1, 1, 50, 68));
         this.triggers.push(new Teleporter(50, 62, 1, 1, 12, 5));
         this.triggers.push(new Teleporter(12, 13, 1, 1, 12, 5));
+
+        //interactables
+        this.interactables.push(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(), {sx, sy, swidth, sheight}));
     }
 
     update(player) {
@@ -49,17 +53,30 @@ class Level {
     }
 
     render(ctx, camera) {
+        //render tiles
         this.tilemap.render(ctx, camera);
-        /*this.enemies.forEach(enemy => {
-            enemy.render(ctx, camera);
-        });
+        
+        //render interactables
+        this.interactables.forEach(interactable => {
+            interactable.render(ctx, camera);
+        }); 
+        
+        /*
         this.pickups.forEach(pickup => {
             pickup.render(ctx, camera);
-        });*/
+        });
+        */
 
         //render triggers if debug is enabled
         if (debug)
             this.triggers.forEach(trigger => trigger.render(ctx, camera));
+    }
+
+    addInteractble(interactable) {
+        this.interactables.push(interactable);
+        //add collision
+        //?????
+        
     }
 
     //generates and returns a level

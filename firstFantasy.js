@@ -1,7 +1,7 @@
 //call setup
 window.addEventListener("load", setup);
 let deltaTime = Date.now();
-let gameState = GameState.DIALOGUE;
+let gameState = GameState.PLAY;
 
 
 //load game files

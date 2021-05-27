@@ -1,6 +1,7 @@
 class Player {
     constructor(character, input) {
         this.character = character;
+        this.inventory = []; //should inventory be refactored into character?
         this.input = input;
         /*document.addEventListener("keypress", ({key})=> {
             console.log(key);

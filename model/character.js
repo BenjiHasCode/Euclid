@@ -7,7 +7,7 @@ class Character extends Entity{
         this.goal; //REMOVE ??
     }
 
-    update(level) {
+    update(level) { //REFACTOR THE KEY INPUT OUT OF CHAR AND INTO PLAYER OBJECT
         //check if character is currently doing something
         if(this.state != CharacterState.IDLE) {
             //update current action
