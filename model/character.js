@@ -1,12 +1,9 @@
 class Character extends Entity{
-    constructor(x, y, hp, direction, state, spritesheet) {
+    constructor(x, y, direction, state, spritesheet) {
         super(x, y);
-        this.hp = hp || 100;
-        this.currentHp = hp;
         this.direction = direction || Direction.RIGHT;
         this.state = state || CharacterState.IDLE;
         this.spritesheet = spritesheet;
-        this.currentAction = null; ///
         this.goal; //REMOVE ??
     }
 
@@ -19,10 +16,9 @@ class Character extends Entity{
             //check if character can start doing something
                 //check if direction needs updating
             this.updateDirection();
-
             //check attack input
             if (spacePressed) {
-                this.state = CharacterState.ATTACK;
+                this.interact(level);
             } 
             //check move input
             else if (upPressed || downPressed || leftPressed || rightPressed) {
@@ -39,9 +35,9 @@ class Character extends Entity{
     updateAction(level) {
         //continue doing current action
         switch(this.state) {
-            case CharacterState.ATTACK:
+            /*case CharacterState.ATTACK:
                 this.attack(level);
-                break;
+                break;*/
             case CharacterState.MOVE:
                 switch(this.direction) {
                     case Direction.UP:
@@ -171,13 +167,36 @@ class Character extends Entity{
         }
     }
 
-    attack(level) {
-
-    }
-
-    /*
     interact(level) {
-
+        switch(this.direction) {
+            case Direction.UP:
+                level.interactables.forEach(item => {
+                    if (this.x == item.x && this.y-1 == item.y) {
+                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                    }
+                });
+                break;
+            case Direction.LEFT:
+                level.interactables.forEach(item => {
+                    if (this.x-1 == item.x && this.y == item.y) {
+                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                    }
+                });
+                break;
+            case Direction.DOWN:
+                level.interactables.forEach(item => {
+                    if (this.x == item.x && this.y+1 == item.y) {
+                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                    }
+                });
+                break;
+            case Direction.RIGHT:
+                level.interactables.forEach(item => {
+                    if (this.x+1 == item.x && this.y == item.y) {
+                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                    }
+                });
+                break;
+        }
     }
-    */
 }

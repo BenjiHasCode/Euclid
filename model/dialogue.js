@@ -14,24 +14,36 @@ class Dialogue {
     }
 
     update() {
-        //increment counter
+        //find complete message length
+        let messageLength = 0;
+        this.message.forEach(text => {
+            messageLength += text.length;
+        });
+
+        //check delta time
         if (Date.now() - this.lastUpdate >= this.speed) {
-            if (this.index < this.message.length) {
+            //update index
+            if (this.index < messageLength) {
                 this.index++;
                 this.lastUpdate = Date.now();
+            }
+
+            //check if player is trying to "skip" dialogue
+            if(Date.now() - this.lastUpdate >= 350 && spacePressed) {
+                if(this.index < messageLength) {
+                    this.index = messageLength;
+                } 
+                //if entire text is displayed, and space is pressed, exit dialogue
+                else { //TODO FIX LATER
+                    gameState = GameState.PLAY;
+                }
             }
         }
 
         //check if player is trying to "skip" dialogue
-        if(spacePressed) {
-            if(this.index < this.message.length) {
-                this.index = this.message.length;
-            } 
-            //if entire text is displayed, and space is pressed, exit dialogue
-            else {
-                return false;
-            }
-        }
+        if(spacePressed)
+            if(this.index < messageLength)
+                this.index = messageLength;
     }
 
     render(canvas, ctx) {
@@ -49,23 +61,19 @@ class Dialogue {
 
         //draw text
         ctx.save();
-        const textSize;
+        let textSize;
 
-        //find max indec
-        let messageLength;
-        this.message.foreach(text, ()=> messageLength += text.length);
-
-
+        
         if (canvas.width * .8 < canvas.height * .1)
             textSize = canvas.width * .8;
         else
             textSize = canvas.height * .1;
-
+        //define text info
         ctx.font = "bold " + textSize + "px Arial";
-
-
         ctx.textBaseline = "top";   //makes the text appear under the x, y coordinate (normally it appears above (which is problematic if the font size change))
         ctx.fillStyle = "white";
+
+
 
         let tempDex = this.index;
         //write the strings
@@ -74,10 +82,10 @@ class Dialogue {
                 ctx.fillText(this.message[i], dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
                // this.tempDex -= this.message[i].length;
             } else {
-                const partMessage = this.message.substring(0, this.index);
+                const partMessage = this.message[i].substring(0, tempDex);
                 ctx.fillText(partMessage, dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
             }
-            this.tempDex -= this.message[i].length;
+            tempDex -= this.message[i].length;
 
         }
 

@@ -1,7 +1,7 @@
 //call setup
 window.addEventListener("load", setup);
 let deltaTime = Date.now();
-let gameState = GameState.PLAY;
+let gameState = GameState.DIALOGUE;
 
 
 //load game files
@@ -25,7 +25,7 @@ function setup() {
 
     //initialize player
 //    const player = new Player(x, y, 100, Direction.RIGHT, "MOVE", new Spritesheet(noobSheet, 150, 4, 0, true));
-    const player = new Player(new Noob(39, 78, 100, Direction.UP, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
+    const player = new Player(new Noob(39, 78, Direction.UP, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
 
     //initialize camera
     const camera = new Camera(player);
@@ -40,7 +40,7 @@ function setup() {
     gameLoop(canvas, ctx, camera, player, level);
 }
 
-const d = new Dialogue("Hello, \nWorld!", TextSpeed.SLOW);
+const d = new Dialogue("Hello, \nWorld!\n\nHi!", TextSpeed.SLOW);
 
 
 function gameLoop(canvas, ctx, camera, player, level) {
@@ -54,17 +54,14 @@ function gameLoop(canvas, ctx, camera, player, level) {
 
         //update camera
         camera.update();
-
-        //draw
-        render(canvas, ctx, camera, player, level);
     }
     //else update dialogue message
     else {
-        //if dialogue update returns false dialogue is done
-        if(!d.update()) {
-            gameState = GameState.PLAY;
-        }
-    }
+        d.update();
+    } 
+    
+    //draw
+    render(canvas, ctx, camera, player, level);
 
     //update deltaTime
     deltaTime = Date.now();
@@ -85,8 +82,8 @@ function render(canvas, ctx, camera, player, level) {
     player.render(ctx, camera);
 
     //test dialogue
-
-    d.render(canvas, ctx);
+    if (gameState == GameState.DIALOGUE)
+        d.render(canvas, ctx);
 }
 
 

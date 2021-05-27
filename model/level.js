@@ -35,7 +35,7 @@ class Level {
 
 
         
-        this.pickups = [];
+        this.interactables = [];
         this.triggers = [];
         this.triggers.push(new Teleporter(63, 76, 1, 1, 50, 68));
         this.triggers.push(new Teleporter(50, 62, 1, 1, 12, 5));
