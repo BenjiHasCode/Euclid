@@ -25,11 +25,10 @@ class Dialogue {
             //update index
             if (this.index < messageLength) {
                 this.index++;
-                this.lastUpdate = Date.now();
             }
 
             //check if player is trying to "skip" dialogue
-            if(Date.now() - this.lastUpdate >= 350 && spacePressed) {
+            if(spacePressed) {
                 if(this.index < messageLength) {
                     this.index = messageLength;
                 } 
@@ -38,12 +37,14 @@ class Dialogue {
                     gameState = GameState.PLAY;
                 }
             }
-        }
 
+            this.lastUpdate = Date.now();
+        }
+/*
         //check if player is trying to "skip" dialogue
         if(spacePressed)
             if(this.index < messageLength)
-                this.index = messageLength;
+                this.index = messageLength;*/
     }
 
     render(canvas, ctx) {
@@ -72,7 +73,6 @@ class Dialogue {
         ctx.font = "bold " + textSize + "px Arial";
         ctx.textBaseline = "top";   //makes the text appear under the x, y coordinate (normally it appears above (which is problematic if the font size change))
         ctx.fillStyle = "white";
-
 
 
         let tempDex = this.index;

@@ -40,7 +40,7 @@ function setup() {
     gameLoop(canvas, ctx, camera, player, level);
 }
 
-const d = new Dialogue("Hello, \nWorld!\n\nHi!", TextSpeed.SLOW);
+let d = new Dialogue("Hello, \nWorld!\n\nHi!", TextSpeed.SLOW);
 
 
 function gameLoop(canvas, ctx, camera, player, level) {

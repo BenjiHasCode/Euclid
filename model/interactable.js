@@ -11,6 +11,8 @@ class Interactable extends Entity{
     }
 
     interact() {
+        gameState = GameState.DIALOGUE;
+        d = new Dialogue("Nice!\nYou obtained:\nAN ITEM!!!\nOMG", TextSpeed.SLOW);
 
     }
 

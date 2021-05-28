@@ -43,7 +43,10 @@ class Level {
         this.triggers.push(new Teleporter(12, 13, 1, 1, 12, 5));
 
         //interactables
-        this.interactables.push(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(), {sx, sy, swidth, sheight}));
+        this.interactables.push(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
+        this.interactables.push(new Interactable(39, 67, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
+
+    
     }
 
     update(player) {
@@ -76,7 +79,7 @@ class Level {
         this.interactables.push(interactable);
         //add collision
         //?????
-        
+
     }
 
     //generates and returns a level

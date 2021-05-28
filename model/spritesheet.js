@@ -11,11 +11,11 @@ let potionSheet = new Image();
 class Spritesheet {
     constructor (image, timePerFrame, numberOfFrames, currentFrame, repeat) {
         this.image = image;
-        this.timePerFrame = timePerFrame;   //time in ms
+        this.timePerFrame = timePerFrame || 1000;   //time in ms
         this.numberOfFrames = numberOfFrames || 1; //default 1
         this.currentFrame = currentFrame || 0;
         this.deltaTimeLastSprite = Date.now();  //do we need this? can we use global delta time?
-        this.repeat = repeat;
+        this.repeat = repeat ||true;
     }
 
 
