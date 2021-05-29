@@ -1,3 +1,17 @@
+const Item = {
+    BUCKET: 0,
+    ACID: 1,
+    KEY: 2,
+
+}
+
+
+
+
+
+
+
+
 class Interactable extends Entity{
     constructor(x, y, width, height, reward, spritesheet, spriteInfo) {
         super(x, y);
@@ -12,13 +26,13 @@ class Interactable extends Entity{
 
     interact() {
         gameState = GameState.DIALOGUE;
-        d = new Dialogue("Nice!\nYou obtained:\nAN ITEM!!!\nOMG", TextSpeed.SLOW);
+        d = new Dialogue("You obtained:\nAN ITEM!!!\nOMG", TextSpeed.SLOW);
 
     }
 
     render(ctx, camera) {
         const image = this.spritesheet.image;
-        const sx = this.spriteInfo.x + 16 * this.spritesheet.currentFrame;
+        const sx = this.spriteInfo.x + 16/*spriteInfo.width, no?*/ * this.spritesheet.currentFrame;
         const sy = this.spriteInfo.y;
         const sWidth = this.spriteInfo.width;
         const sHeight = this.spriteInfo.height;

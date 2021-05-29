@@ -43,9 +43,8 @@ class Level {
         this.triggers.push(new Teleporter(12, 13, 1, 1, 12, 5));
 
         //interactables
-        this.interactables.push(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
-        this.interactables.push(new Interactable(39, 67, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
-
+        this.addInteractble(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
+        this.addInteractble(new Interactable(39, 67, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
     
     }
 
@@ -76,10 +75,16 @@ class Level {
     }
 
     addInteractble(interactable) {
+        //add interactable to list
         this.interactables.push(interactable);
-        //add collision
-        //?????
 
+        //add interactable to tilemap logic layer - collision
+        const x = interactable.x;
+        const y = interactable.y;
+        const width = interactable.width;
+        const height = interactable.height;
+
+        this.tilemap.addObstacle(x, y, width, height);
     }
 
     //generates and returns a level

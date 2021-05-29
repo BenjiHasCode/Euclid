@@ -199,6 +199,24 @@ class Tilemap {
         }
     }*/
 
+    //adds obstacle on the logic layer
+    addObstacle(x, y, width, height) {
+        for (let i = 0; i < width; i++) {
+            for (let j = 0; j < height; j++) {
+                this.setTile(1, x+i, y+j, 1);
+            }
+        }
+    }
+
+    //removes obstacle on the logic layer
+    removeObstalce(x, y, width, height) {
+        for (let i = 0; i < width; i++) {
+            for (let j = 0; j < height; j++) {
+                this.setTile(1, x+i, y+j, 0);
+            }
+        }
+    }
+
     //generate room based on a position and width/height
     createRoom(x, y, width, height) {
         for (let i = -1; i <= width; i++) {

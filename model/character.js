@@ -5,31 +5,27 @@ class Character extends Entity{
         this.state = state || CharacterState.IDLE;
         this.spritesheet = spritesheet;
         this.goal; //REMOVE ??
+        this.interactTime = Date.now();
     }
 
     update(level) { //REFACTOR THE KEY INPUT OUT OF CHAR AND INTO PLAYER OBJECT
+        //TODO REFACTOR UPDATE SPRITESHEET COUNTER HERE?
+        this.spritesheet.updateSpriteCounter();
+        
+        
         //check if character is currently doing something
         if(this.state != CharacterState.IDLE) {
             //update current action
-            this.updateAction(level);
-        }else {
+            return this.updateAction(level);
+        }/*else {
             //check if character can start doing something
                 //check if direction needs updating
             this.updateDirection();
             //check attack input
-            if (spacePressed) {
-                this.interact(level);
-            } 
-            //check move input
-            else if (upPressed || downPressed || leftPressed || rightPressed) {
-                this.state = CharacterState.MOVE;//refactor todtodotodortodortodoytdfiytfiytfiytfiytfiytfiyktfutyuiyt
-            }/* else if (enterPressed) {
-                this.interact(level);
-            }*/
-        }
 
-        //TODO REFACTOR UPDATE SPRITESHEET COUNTER HERE?
-        this.spritesheet.updateSpriteCounter();
+        }*/
+
+        
     }
 
     updateAction(level) {
@@ -41,7 +37,7 @@ class Character extends Entity{
             case CharacterState.MOVE:
                 switch(this.direction) {
                     case Direction.UP:
-                        this.moveUp(level);
+                        return this.moveUp(level);
                         break;
                     case Direction.LEFT:
                         this.moveLeft(level);
@@ -88,9 +84,11 @@ class Character extends Entity{
             //check if we hit goal (or overshot)
             if(this.y <= this.goal) {
                 this.y = this.goal;
-                this.state = CharacterState.IDLE;
+               // this.state = CharacterState.IDLE;
                 this.goal = undefined;
+                return true; //return true when finished updating
             }
+            return false;
         }
     }
 
@@ -149,7 +147,6 @@ class Character extends Entity{
             this.goal = this.x + 1;
 
             //see if goal is valid
-            console.log(level.tilemap.getTile(1, this.goal, this.y));
             if (level.tilemap.getTile(1, this.goal, this.y) != 0) {
                 this.goal = undefined;
                 this.state = CharacterState.IDLE;
@@ -168,6 +165,7 @@ class Character extends Entity{
     }
 
     interact(level) {
+        //if ()
         switch(this.direction) {
             case Direction.UP:
                 level.interactables.forEach(item => {
