@@ -37,6 +37,22 @@ class Player {
         }
     }
 
+    //returns true if itemID is found in inventory and false if not
+    hasItem(itemID) {
+        this.inventory.forEach(item => {
+            if (item == itemID)
+                return true;
+        });
+
+        return false;
+        /*for (let i = 0; i < this.inventory.length; i++) {
+            if (this.inventory[i] == itemID)
+                return true;
+        }
+
+        return false;*/
+    }
+
 
     render(ctx, camera) {
         //render character

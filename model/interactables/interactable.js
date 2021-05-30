@@ -2,40 +2,41 @@ const Item = {
     BUCKET: 0,
     ACID: 1,
     KEY: 2,
+    BOOKCASE: 3
+}
 
+function getItemName(itemID) {
+    switch(itemID) {
+        case 0:
+            return "A Bucket";
+        case 1:
+            return "A vial of Acid";
+        case 2:
+            return "A Key";
+        case 3:
+            return "A Bookcase";
+        default:
+            //return "Placeholder";
+            return "I have no idea what this is....";   //thought this was funnier than placeholder
+    }
 }
 
 
 class Interactable extends Entity{
-    constructor(x, y, width, height, prerequisite, reward, spritesheet) {
+    constructor(id, x, y, width, height, spritesheet) {
         super(x, y);
+        this.id = id;
         this.width = width;
         this.height = height;
         this.spritesheet = spritesheet;
-        //since an interactable will most likely only show one image, 
-        //Í think it's valuable to store the information of the sprite (sx, sy and such)
-        this.spriteInfo = spriteInfo;
-        this.prerequisite = prerequisite || null;
-        this.prerequisiteMessage = prerequisiteMessage;
-        this.reward = reward || null; //if reward != null - give something to player
     }
 
-    interact(player) {
+    interact() {
+        //set gamestate to dialogue
         gameState = GameState.DIALOGUE;
 
-        //if there is a prerequisite (and player doesn't fulfill it) respond this
-        if (this.prerequisite != null && !player.hasItem()) {
-            //TODO
-            d = new Dialogue("You obtained:\nAN ITEM!!!\nOMG", TextSpeed.FAST);
-
-        }
-        //else write generic message
-        else {
-            d = new Dialogue("You obtained:\nAN ITEM!!!\nOMG", TextSpeed.FAST);
-
-        }
-        d = new Dialogue("You obtained:\nAN ITEM!!!\nOMG", TextSpeed.FAST);
-
+        //set generic message
+        d = new Dialogue("You See " + getItemName(this.id), TextSpeed.FAST);
     }
 
     render(ctx, camera) {
