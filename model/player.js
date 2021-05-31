@@ -3,6 +3,7 @@ class Player {
         this.character = character;
         this.inventory = []; //should inventory be refactored into character?
         this.input = input;
+        this.interactTimer = Date.now() - 200;
         /*document.addEventListener("keypress", ({key})=> {
             console.log(key);
         });*/
@@ -27,8 +28,12 @@ class Player {
         //else check if player is inputting new action
         else {
             //check interact input
-            if (spacePressed)
-                this.character.interact(level);
+            if (spacePressed) {
+                if(Date.now() - this.interactTimer >= 200) {
+                   this.character.interact(level);
+                   this.interactTimer = Date.now();
+                }
+            }
             //check move input
             else if (upPressed || downPressed || leftPressed || rightPressed) {
                 this.character.updateDirection();

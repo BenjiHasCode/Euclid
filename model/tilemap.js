@@ -209,7 +209,7 @@ class Tilemap {
     }
 
     //removes obstacle on the logic layer
-    removeObstalce(x, y, width, height) {
+    removeObstacle(x, y, width, height) {
         for (let i = 0; i < width; i++) {
             for (let j = 0; j < height; j++) {
                 this.setTile(1, x+i, y+j, 0);

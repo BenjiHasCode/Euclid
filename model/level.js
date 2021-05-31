@@ -43,9 +43,10 @@ class Level {
         this.triggers.push(new Teleporter(12, 13, 1, 1, 12, 5));
 
         //interactables
-        this.addInteractble(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
-        this.addInteractble(new Interactable(39, 67, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
-    
+       // this.addInteractble(new Interactable(39, 77, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
+       // this.addInteractble(new Interactable(39, 67, 1, 1, "reward", new Spritesheet(potionSheet), {x: 16*4, y: 0, width: 16, height:16}));
+        this.addInteractble(new Door(39, 77));
+
     }
 
     update(player) {

@@ -18,7 +18,7 @@ function setup() {
     floorSheet.src = "assets/visual/Floor.png";
     wallSheet.src = "assets/visual/Wall.png";
     potionSheet.src = "assets/visual/Potion.png";
-    //doorSheet.src = "assets/visual/Door0.png";
+    doorSheet.src = "assets/visual/Door0.png";
     //trapSheet.src = "assets/visual/Trap1.png";
 
 

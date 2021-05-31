@@ -164,34 +164,34 @@ class Character extends Entity{
         }
     }
 
+    //
     interact(level) {
-        //if ()
         switch(this.direction) {
             case Direction.UP:
                 level.interactables.forEach(item => {
                     if (this.x == item.x && this.y-1 == item.y) {
-                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
                     }
                 });
                 break;
             case Direction.LEFT:
                 level.interactables.forEach(item => {
                     if (this.x-1 == item.x && this.y == item.y) {
-                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
                     }
                 });
                 break;
             case Direction.DOWN:
                 level.interactables.forEach(item => {
                     if (this.x == item.x && this.y+1 == item.y) {
-                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
                     }
                 });
                 break;
             case Direction.RIGHT:
                 level.interactables.forEach(item => {
                     if (this.x+1 == item.x && this.y == item.y) {
-                        item.interact(); //TODO PLAYER PARAMETER OR RETURN SOMETHING
+                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
                     }
                 });
                 break;

@@ -4,7 +4,7 @@ let GUISheet = new Image();
 let floorSheet = new Image();
 let wallSheet = new Image();
 let potionSheet = new Image();
-//let doorSheet = new Image();
+let doorSheet = new Image();
 //let trapSheet = new Image();
 
 
