@@ -5,9 +5,9 @@ function playSound(path, volumePercentage) {
 }
 
 function playBackgroundMusic(path, volumePercentage){
-    let audio = new Audio(path);
-    audio.volume *= volumePercentage;
-    audio.loop = true;
+    backgroundMusic = new Audio(path);
+    backgroundMusic.volume *= volumePercentage;
+    backgroundMusic.loop = true;
     
-    audio.play();
+    backgroundMusic.play();
 }

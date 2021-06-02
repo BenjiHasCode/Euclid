@@ -10,8 +10,8 @@ class Camera extends Entity {
 
     update() {
         //set to target
-        this.x = this.target.getX()*tileWidth;
-        this.y = this.target.getY()*tileHeight;
+        this.x = this.target.getX()*tileWidth + tileWidth/2; 
+        this.y = this.target.getY()*tileHeight + tileHeight/2;
         
         //center target
         this.x -= tileWidth * tileWidthView / 2;

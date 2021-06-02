@@ -15,10 +15,11 @@ debugButton.addEventListener("click", ()=> {
 });
 
 cameraSlider.addEventListener("input", ()=> {
+    //update how many tiles can be seen at a time
     tileWidthView = 9 * cameraSlider.valueAsNumber;
     tileHeightView = 5 * cameraSlider.valueAsNumber;
 
-    //TODO REFACTOR
+    //update sprites size on screen
     tileWidth = canvas.width/tileWidthView;
     tileHeight = canvas.height/tileHeightView;
 });

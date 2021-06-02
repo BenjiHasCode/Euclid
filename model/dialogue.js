@@ -11,6 +11,7 @@ class Dialogue {
         this.speed = speed;
         this.lastUpdate = Date.now();
         this.index = 0; //we are at the start of text
+        this.skip = Date.now();
     }
 
     update() {
@@ -25,12 +26,14 @@ class Dialogue {
             //update index
             if (this.index < messageLength) {
                 this.index++;
+                playSound("assets/audio/dialogue.mp3", 1);
             }
 
             //check if player is trying to "skip" dialogue
-            if(spacePressed) {
+            if(spacePressed && Date.now() - this.skip > 100) {
                 if(this.index < messageLength) {
                     this.index = messageLength;
+                    this.skip = Date.now();
                 } 
                 //if entire text is displayed, and space is pressed, exit dialogue
                 else { //TODO FIX LATER
@@ -40,11 +43,6 @@ class Dialogue {
 
             this.lastUpdate = Date.now();
         }
-/*
-        //check if player is trying to "skip" dialogue
-        if(spacePressed)
-            if(this.index < messageLength)
-                this.index = messageLength;*/
     }
 
     render(canvas, ctx) {
@@ -89,7 +87,6 @@ class Dialogue {
 
         }
 
-        
         ctx.restore();
     }
 }

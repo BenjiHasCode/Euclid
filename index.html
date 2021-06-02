@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Fantasy</title>
+    <title>Euclid</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-        /*This is for pixelating text.. if it worked*/
-        canvas {
-            font-smooth: never;
-            -webkit-font-smoothing: none;
-        }
 
         #controls {
             position: absolute;
+        }
+
+        #intro {
+            text-align: center;
+        }
+
+        #start {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px 32px; /*resizes button*/
+            font-size: 16px;
         }
     </style>
     <!--MODEL-->
@@ -32,9 +38,21 @@
     <script src="model/spritesheet.js" defer></script>
     <script src="model/teleporter.js" defer></script>
     <script src="model/dialogue.js" defer></script>
+        <!--Interactables-->
     <script src="model/interactables/interactable.js" defer></script>
-    <script src="model/interactables/item.js" defer></script>
     <script src="model/interactables/door.js" defer></script>
+            <!--Items-->
+    <script src="model/interactables/items/item.js" defer></script>
+    <script src="model/interactables/items/acid.js" defer></script>
+    <script src="model/interactables/items/book.js" defer></script>
+    <script src="model/interactables/items/bucket.js" defer></script>
+            <!--"Quests"-->
+    <script src="model/interactables/quests/quest.js" defer></script>
+    <script src="model/interactables/quests/well.js" defer></script>
+    <script src="model/interactables/quests/rustedDoor.js" defer></script>
+    <script src="model/interactables/quests/bookcase.js" defer></script>
+    <script src="model/interactables/quests/escapeDoor.js" defer></script>
+
     <!--UTIL-->
     <script src="util/canvasUtil.js" defer></script>
     <script src="util/direction.js" defer></script>
@@ -43,13 +61,28 @@
     <script src="util/debug.js" defer></script>
     <script src="util/sound.js" defer></script>
     <!--MAIN GAME-->
-    <script src="firstFantasy.js" defer></script>
+    <script src="euclid.js" defer></script>
 </head>
 <body>
-    <div id="controls">
+    <div id="controls" hidden>
         <button id="debugButton">Debug</button>
         <input type="range" id="cameraSlider" max=30 value=1 min=.5 step=.1 hidden>
     </div>
-    <canvas id="canvas"></canvas>
+    <div id="intro">
+        <h1>Euclid</h1>
+        <p><b>Instructions:</b><br>Movement: WASD/Arrow Keys <br>Interaction (and exiting dialogoue): Space</p>
+        <p><b>Thanks to:</b>
+            <br>
+            vandar - Bookshelf <br>
+            https://opengameart.org/content/objects-0
+            <br><br>
+            DragonDePlatino for creating the tiles & Dawnbringer for the pallete <br>
+            https://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+            <br><br>
+            Also - Thanks to all the various artists that released their art to the Public Domain - couldn't have made this without you
+        </p>
+        <button id="start">Start</button>
+    </div>
+    <canvas id="canvas" hidden></canvas>
 </body>
 </html>

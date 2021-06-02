@@ -4,50 +4,53 @@ class Character extends Entity{
         this.direction = direction || Direction.RIGHT;
         this.state = state || CharacterState.IDLE;
         this.spritesheet = spritesheet;
-        this.goal; //REMOVE ??
-        this.interactTime = Date.now();
+        this.goal;
+        this.inventory = [];
     }
 
-    update(level) { //REFACTOR THE KEY INPUT OUT OF CHAR AND INTO PLAYER OBJECT
-        //TODO REFACTOR UPDATE SPRITESHEET COUNTER HERE?
+    //returns true if itemID is found in inventory and false if not
+    hasItem(itemID) {
+        for (let i = 0; i < this.inventory.length; i++) {
+            if (this.inventory[i] == itemID)
+                return true;
+        }
+
+        return false;
+    }
+
+    removeFromInventory(itemID) {
+        //remove item from list
+        for(let i = 0; i < this.inventory.length; i++){ 
+            if (this.inventory[i] == itemID) {
+                //array.splice(index, how many elements to remove)
+                this.inventory.splice(i, 1); 
+            }
+        }
+    }
+
+    update(level) {
         this.spritesheet.updateSpriteCounter();
-        
         
         //check if character is currently doing something
         if(this.state != CharacterState.IDLE) {
             //update current action
             return this.updateAction(level);
-        }/*else {
-            //check if character can start doing something
-                //check if direction needs updating
-            this.updateDirection();
-            //check attack input
-
-        }*/
-
-        
+        }
     }
 
     updateAction(level) {
         //continue doing current action
         switch(this.state) {
-            /*case CharacterState.ATTACK:
-                this.attack(level);
-                break;*/
             case CharacterState.MOVE:
                 switch(this.direction) {
                     case Direction.UP:
                         return this.moveUp(level);
-                        break;
                     case Direction.LEFT:
-                        this.moveLeft(level);
-                        break;
+                        return this.moveLeft(level);
                     case Direction.DOWN:
-                        this.moveDown(level);
-                        break;
+                        return this.moveDown(level);
                     case Direction.RIGHT:
-                        this.moveRight(level);
-                        break;
+                        return this.moveRight(level);
                 }
                 break;
         }
@@ -84,7 +87,6 @@ class Character extends Entity{
             //check if we hit goal (or overshot)
             if(this.y <= this.goal) {
                 this.y = this.goal;
-               // this.state = CharacterState.IDLE;
                 this.goal = undefined;
                 return true; //return true when finished updating
             }
@@ -110,9 +112,10 @@ class Character extends Entity{
             //check if we hit goal (or overshot)
             if(this.y >= this.goal) {
                 this.y = this.goal;
-                this.state = CharacterState.IDLE;
                 this.goal = undefined;
+                return true;
             }
+            return false;
         }
     }
 
@@ -134,9 +137,10 @@ class Character extends Entity{
             //check if we hit goal (or overshot)
             if(this.x <= this.goal) {
                 this.x = this.goal;
-                this.state = CharacterState.IDLE;
                 this.goal = undefined;
+                return true;
             }
+            return false;
         }
     }
 
@@ -158,43 +162,65 @@ class Character extends Entity{
             //check if we hit goal (or overshot)
             if(this.x >= this.goal) {
                 this.x = this.goal;
-                this.state = CharacterState.IDLE;
                 this.goal = undefined;
+                return true;
             }
+            return false;
         }
     }
 
-    //
+    
     interact(level) {
+        let x = this.x;
+        let y = this.y;
+
         switch(this.direction) {
             case Direction.UP:
-                level.interactables.forEach(item => {
-                    if (this.x == item.x && this.y-1 == item.y) {
-                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
-                    }
-                });
+                y--;
                 break;
             case Direction.LEFT:
-                level.interactables.forEach(item => {
-                    if (this.x-1 == item.x && this.y == item.y) {
-                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
-                    }
-                });
+                x--;
                 break;
             case Direction.DOWN:
-                level.interactables.forEach(item => {
-                    if (this.x == item.x && this.y+1 == item.y) {
-                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
-                    }
-                });
+                y++;
                 break;
             case Direction.RIGHT:
-                level.interactables.forEach(item => {
-                    if (this.x+1 == item.x && this.y == item.y) {
-                        item.interact(level.tilemap); //TODO PLAYER PARAMETER OR RETURN SOMETHING
-                    }
-                });
-                break;
+                x++;
+                break;  
         }
+
+        //check if x and y fit any interactable
+        level.interactables.forEach(interactable => {
+            const xCheck = (x >= interactable.x && x < interactable.x + interactable.width);
+            const yCheck = (y >= interactable.y && y < interactable.y + interactable.height);
+            if (xCheck && yCheck) {
+                interactable.interact(level.tilemap);
+                return;
+            }
+        });
+
+        //check pickups
+        level.items.forEach(item => {
+            const xCheck = (x >= item.x && x < item.x + item.width);
+            const yCheck = (y >= item.y && y < item.y + item.height);
+            if (xCheck && yCheck) {
+                this.inventory.push(item.interact());
+                level.removeItem(item);
+                return;
+            }
+        });
+
+        //check if interacting with quest objects
+        level.quests.forEach(quest => {
+            const xCheck = (x >= quest.x && x < quest.x + quest.width);
+            const yCheck = (y >= quest.y && y < quest.y + quest.height);
+            if (xCheck && yCheck) {
+                const temp = quest.interact(this, level.tilemap);
+                //check if anything was returned
+                if(temp != undefined)
+                    this.inventory.push(temp);
+                return;
+            }
+        });
     }
 }

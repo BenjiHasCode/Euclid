@@ -62,32 +62,3 @@ document.addEventListener("keyup", ({code})=> {
             break;
     }
 });
-
-/*
-function handleInput(gameState, character) {
-    switch(gameState) {
-        case gameState.MENU:
-            //handle menu input
-            break;
-        case gameState.PLAY:
-            //I want it to be sort of "turn based". Fx you move a tile and while moving you can't do anything
-            //this is a try at emulating the movement of early tilebased games, fx Pokemon
-            if(character.state == characterState.IDLE) {
-                if(upPressed){
-            
-                }else if(downPressed) {
-
-                }else if(leftPressed) {
-                    
-                }else if(rightPressed) {
-                    
-                }else if(spacePressed) {
-                    
-                }else if(enterPressed) {
-                    
-                }
-            }
-            //handle character movement
-            break;
-    }
-}*/

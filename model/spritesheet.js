@@ -1,11 +1,13 @@
 let noobSheet = new Image();
-let rogueSheet = new Image();
 let GUISheet = new Image();
 let floorSheet = new Image();
 let wallSheet = new Image();
 let potionSheet = new Image();
 let doorSheet = new Image();
-//let trapSheet = new Image();
+let wellSheet = new Image();
+let bookSheet = new Image();
+let bookshelfSheet = new Image();
+let bucketSheet = new Image();
 
 
 class Spritesheet {
@@ -22,15 +24,8 @@ class Spritesheet {
     updateSpriteCounter() {
         //check if we need to update sprite - based on time
         if (Date.now() - this.deltaTimeLastSprite >= this.timePerFrame) {
-            /*
             this.currentFrame++;
             this.currentFrame %= this.numberOfFrames;
-            */
-            if (this.currentFrame+1 != this.numberOfFrames) {
-                this.currentFrame++;
-            } else if (this.repeat) {
-                this.currentFrame = 0;
-            }
             this.deltaTimeLastSprite = Date.now();
         }
     }

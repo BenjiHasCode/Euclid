@@ -1,3 +1,4 @@
+//a simple character (mostly a leftover from when this was a roguelike project, but still used for player character)
 class Noob extends Character {
     constructor(x, y, hp, direction, state, spritesheet, movement) {
         super(x, y, hp, direction, state, spritesheet, movement);
@@ -42,41 +43,6 @@ class Noob extends Character {
                         ctx.drawImage(this.spritesheet.image, framePosition, 32, 16, 16, xDrawPosition, yDrawPosition, tileWidth, tileHeight);
                         break;
                 }
-                break;
-            case CharacterState.ATTACK: //TODO
-                switch(this.direction) {
-                    case Direction.UP:
-                        ctx.drawImage(this.spritesheet.image, 0, 0, 16, 16, xDrawPosition, yDrawPosition, tileWidth, tileHeight);
-                        break;
-                    case Direction.LEFT:
-                        ctx.drawImage(this.spritesheet.image, 44, 0, 16, 16, xDrawPosition, yDrawPosition, tileWidth, tileHeight);
-                        break;
-                    case Direction.DOWN:
-                        ctx.drawImage(this.spritesheet.image, 66, 0, 16, 16, xDrawPosition, yDrawPosition, tileWidth, tileHeight);
-                        break;
-                    case Direction.RIGHT:
-                        ctx.drawImage(this.spritesheet.image, 22, 0, 16, 16, xDrawPosition, yDrawPosition, tileWidth, tileHeight);
-                        break;
-                }
-                break;
-            case "HURT":
-                switch(this.direction) {
-                    case "NORTH":
-                        ctx.drawImage(this.spritesheet.image, 0, 0, 16, 16, this.x-camera.x, this.y-camera.y, tileWidth, tileHeight);
-                        break;
-                    case "WEST":
-                        ctx.drawImage(this.spritesheet.image, 44, 0, 16, 16, this.x-camera.x, this.y-camera.y, tileWidth, tileHeight);
-                        break;
-                    case "SOUTH":
-                        ctx.drawImage(this.spritesheet.image, 66, 0, 16, 16, this.x-camera.x, this.y-camera.y, tileWidth, tileHeight);
-                        break;
-                    case "EAST":
-                        ctx.drawImage(this.spritesheet.image, 22, 0, 16, 16, this.x-camera.x, this.y-camera.y, tileWidth, tileHeight);
-                        break;
-                }
-                break;
-            case "DEAD":
-                ctx.drawImage(this.spritesheet.image, 22, 0, 16, 16, this.x-camera.x, this.y-camera.y, tileWidth, tileHeight);
                 break;
         }
     }
