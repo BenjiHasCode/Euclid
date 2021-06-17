@@ -21,7 +21,7 @@ class EscapeDoor extends Quest {
                 //play win sound
                 playSound("assets/audio/win.mp3", .5);
             } else {
-                d = new Dialogue("It's\n...\n...locked", TextSpeed.SLOW);
+                d = new Dialogue("It's\n...\n...locked?!", TextSpeed.MEDIUM);
                 gameState = GameState.DIALOGUE;
             }
         }

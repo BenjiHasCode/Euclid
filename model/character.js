@@ -34,136 +34,84 @@ class Character extends Entity{
         //check if character is currently doing something
         if(this.state != CharacterState.IDLE) {
             //update current action
-            return this.updateAction(level);
+           return this.move(level);
         }
     }
 
-    updateAction(level) {
-        //continue doing current action
-        switch(this.state) {
-            case CharacterState.MOVE:
-                switch(this.direction) {
-                    case Direction.UP:
-                        return this.moveUp(level);
-                    case Direction.LEFT:
-                        return this.moveLeft(level);
-                    case Direction.DOWN:
-                        return this.moveDown(level);
-                    case Direction.RIGHT:
-                        return this.moveRight(level);
-                }
+    updateDirection(direction) {
+        this.direction = direction;
+    }
+
+    setGoal(level) {
+        switch(this.direction) {
+            case Direction.UP:
+                this.goal = {x: this.x, y: this.y-1};
+                break;
+            case Direction.DOWN:
+                this.goal = {x: this.x, y: this.y+1};
+                break;
+            case Direction.LEFT:
+                this.goal = {x: this.x-1, y: this.y};
+                break;
+            case Direction.RIGHT:
+                this.goal = {x: this.x+1, y: this.y};
                 break;
         }
-    }
 
-    updateDirection() {
-        //check if up, down, left or right are pressed
-        if (upPressed) {
-            this.direction = Direction.UP;
-        } else if (downPressed) {
-            this.direction = Direction.DOWN;
-        } else if (leftPressed) {
-            this.direction = Direction.LEFT;
-        } else if (rightPressed) {
-            this.direction = Direction.RIGHT
+        //check if goal isn't valid
+        if(level.tilemap.getTile(1, this.goal.x, this.goal.y) != 0) {
+            this.goal = undefined;
+            this.state = CharacterState.IDLE;
+        }
+        //else set state to move
+        else {
+            this.state = CharacterState.MOVE;
         }
     }
 
-    moveUp(level) {
-        //check if character has goal - if not assign goal, else move
-        if (this.goal == undefined) {
-            //define goal
-            this.goal = this.y-1;
-
-            //see if goal is valid
-            if (level.tilemap.getTile(1, this.x, this.goal) != 0) {
-                this.goal = undefined;
-                this.state = CharacterState.IDLE;
-            }
-        } else {
-            //move
-            this.y -= .005 * (Date.now() - deltaTime);
-
-            //check if we hit goal (or overshot)
-            if(this.y <= this.goal) {
-                this.y = this.goal;
-                this.goal = undefined;
-                return true; //return true when finished updating
-            }
-            return false;
+    move(level) {
+        //if goal is not defined - try to define it
+        if (this.goal == undefined){
+            this.setGoal(level)
         }
-    }
 
-    moveDown(level) {
-        //check if character has goal - if not assign goal, else move
-        if (this.goal == undefined) {
-            //define goal
-            this.goal = this.y+1;
-
-            //see if goal is valid
-            if (level.tilemap.getTile(1, this.x, this.goal) != 0) {
-                this.goal = undefined;
-                this.state = CharacterState.IDLE;
-            }
-        } else {
-            //move
-            this.y += .005 * (Date.now() - deltaTime);
-
-            //check if we hit goal (or overshot)
-            if(this.y >= this.goal) {
-                this.y = this.goal;
-                this.goal = undefined;
-                return true;
-            }
-            return false;
-        }
-    }
-
-    moveLeft(level) {
-        //check if character has goal - if not assign goal, else move
-        if (this.goal == undefined) {
-            //define goal
-            this.goal = this.x-1;
-
-            //see if goal is valid
-            if (level.tilemap.getTile(1, this.goal, this.y) != 0) {
-                this.goal = undefined;
-                this.state = CharacterState.IDLE;
-            }
-        } else {
-            //move
-            this.x -= .005 * (Date.now() - deltaTime);
-
-            //check if we hit goal (or overshot)
-            if(this.x <= this.goal) {
-                this.x = this.goal;
-                this.goal = undefined;
-                return true;
-            }
-            return false;
-        }
-    }
-
-    moveRight(level) {
-        //check if character has goal - if not assign goal, else move
-        if (this.goal == undefined) {
-            //define goal
-            this.goal = this.x + 1;
-
-            //see if goal is valid
-            if (level.tilemap.getTile(1, this.goal, this.y) != 0) {
-                this.goal = undefined;
-                this.state = CharacterState.IDLE;
-            }
-        } else {
-            //move
-            this.x += .005 * (Date.now() - deltaTime);
-
-            //check if we hit goal (or overshot)
-            if(this.x >= this.goal) {
-                this.x = this.goal;
-                this.goal = undefined;
-                return true;
+        if (this.goal != undefined) {
+            //move based on direction
+            switch(this.direction) {
+                case Direction.UP:
+                    //move
+                    this.y -= .005 * (Date.now() - deltaTime);
+                    //check if we hit goal
+                    if(this.y <= this.goal.y) {
+                        this.y = this.goal.y;
+                        this.goal = undefined;
+                        return true; //return true when finished updating
+                    }
+                    break;
+                case Direction.DOWN:
+                    this.y += .005 * (Date.now() - deltaTime);
+                    if(this.y >= this.goal.y) {
+                        this.y = this.goal.y;
+                        this.goal = undefined;
+                        return true;
+                    }
+                    break;
+                case Direction.LEFT:
+                    this.x -= .005 * (Date.now() - deltaTime);
+                    if(this.x <= this.goal.x) {
+                        this.x = this.goal.x;
+                        this.goal = undefined;
+                        return true;
+                    }
+                    break;
+                case Direction.RIGHT:
+                    this.x += .005 * (Date.now() - deltaTime);
+                    if(this.x >= this.goal.x) {
+                        this.x = this.goal.x;
+                        this.goal = undefined;
+                        return true;
+                    }
+                    break;
             }
             return false;
         }

@@ -7,7 +7,7 @@ class Well extends Quest{
     interact(character) {
         if(!this.completed) {
             if(character.hasItem(this.prerequisite)) {
-                const text = "You applied " + getItemName(this.prerequisite) + "\n\nYou got a " + getItemName(this.reward);
+                const text = "You Applied The " + getItemName(this.prerequisite) + "\n\nYou Got A " + getItemName(this.reward);
                 d = new Dialogue(text, TextSpeed.FAST);
 
                 //remove item from character

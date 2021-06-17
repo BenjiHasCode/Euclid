@@ -11,26 +11,31 @@ class Player {
             const finishedAction = this.character.update(level);
 
             if(finishedAction) {
-                if (upPressed || downPressed || leftPressed || rightPressed) {
-                    this.character.updateDirection();
-                    this.character.state = CharacterState.MOVE;
-                } else {
-                    this.character.state = CharacterState.IDLE;
-                }
+                // if character has finished action - set to idle
+                this.character.state = CharacterState.IDLE;
             }
         }
-        //else check if player is inputting new action
-        else {
-            //check interact input
+
+        // if character is idle, check for input
+        if (this.character.state == CharacterState.IDLE){
+            //check interaction
             if (spacePressed) {
                 if(Date.now() - this.interactTimer >= 200) {
                    this.character.interact(level);
                    this.interactTimer = Date.now();
                 }
             }
-            //check move input
+            //check move
             else if (upPressed || downPressed || leftPressed || rightPressed) {
-                this.character.updateDirection();
+                if(upPressed){
+                    this.character.updateDirection(Direction.UP);
+                }else if(downPressed){
+                    this.character.updateDirection(Direction.DOWN);
+                }else if(leftPressed){
+                    this.character.updateDirection(Direction.LEFT);
+                }else if(rightPressed){
+                    this.character.updateDirection(Direction.RIGHT);
+                }
                 this.character.state = CharacterState.MOVE;
             }
         }

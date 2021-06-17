@@ -15,7 +15,7 @@ class RustedDoor extends Quest {
                 //remove item from player
                 character.removeFromInventory(this.prerequisite);
             } else {
-                d = new Dialogue("The door looks rusty\nBut too strong to break\nMaybe some acid\nwould help", TextSpeed.FAST);
+                d = new Dialogue("The Door Looks Rusty\nBut Too Strong To Break\nMaybe Some Acid\nWould Help?", TextSpeed.FAST);
                 gameState = GameState.DIALOGUE;
             }
         }
