@@ -1,4 +1,3 @@
-const tempy = new Image();
 let tileWidth;
 let tileHeight;
 
@@ -81,8 +80,6 @@ class Tilemap {
                     case 8:
                         ctx.drawImage(wallSheet, 16*2, 16*5, 16, 16, xPosition, yPosition, tileWidth, tileHeight);
                         break;
-                    case 9:
-                        break;
                 }
             }
         }
@@ -112,35 +109,46 @@ class Tilemap {
             for (let j = -1; j <= height; j++) {
                 //if i == -1 || i == width - create boundary
                 if(i == -1 || i == width) {
+                    //if we are at the topwest corner
                     if(j == -1 && i == -1) {
                         this.setTile(0, x+i, y+j, 3);
-                    } else if (i == width && j == -1) {
+                    } 
+                    //if we are at the topeast corner
+                    else if (i == width && j == -1) {
                         this.setTile(0, x+i, y+j, 5);
-                    } else if (j >= 0 && j < height) {
+                    }
+                    //if we are at either of the vertical areas (not corners)
+                    else if (j >= 0 && j < height) {
                         this.setTile(0, x+i, y+j, 6);
-                    } else if (i == -1 && j == height) {
+                    } 
+                    //if we are at the bottomwest corner
+                    else if (i == -1 && j == height) {
                         this.setTile(0, x+i, y+j, 7);
-                    } else if (i == width && j == height) {
+                    } 
+                    //if we are at the bottomeast corner
+                    else if (i == width && j == height) {
                         this.setTile(0, x+i, y+j, 8);
                     }
 
-
-                    this.setTile(1, x+i, y+j, 1)
-                }else if (j == height && i >= 0 && i < width) {
-                    this.setTile(0, x+i, y+j, 4);
+                    //set collision tile
                     this.setTile(1, x+i, y+j, 1);
-                } else {
-                    if (j == -1) {
-                        //set wall
-                        this.setTile(0, x+i, y+j, 4)
-                    } else if (j != height)
-                        //set floor
-                        this.setTile(0, x+i, y+j, 1)
                 }
-
-                //create y boundary
-                if(j == -1 || j == height) {
-                    this.setTile(1, x+i, y+j, 1);
+                //if we inside the room (x-wise)
+                else if (i >= 0 && i < width) {
+                    //if we are at the y bottom
+                    if (j == height) {
+                        this.setTile(0, x+i, y+j, 4);
+                        this.setTile(1, x+i, y+j, 1);
+                    }
+                    //if we are at the y top
+                    else if(j == -1) {
+                        this.setTile(0, x+i, y+j, 4);
+                        this.setTile(1, x+i, y+j, 1);
+                    } 
+                    //else create floor
+                    else {
+                        this.setTile(0, x+i, y+j, 1);
+                    }
                 }
             }
         }

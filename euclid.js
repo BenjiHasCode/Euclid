@@ -32,7 +32,7 @@ function setup() {
 
 
     //initialize player
-    const player = new Player(new Noob(39, 78, Direction.UP, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)),0);
+    const player = new Player(new Noob(39, 78, Direction.UP, CharacterState.IDLE, new Spritesheet(noobSheet, 150, 4, 0, true)));
 
     //initialize camera
     const camera = new Camera(player);

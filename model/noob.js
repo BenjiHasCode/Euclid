@@ -1,7 +1,7 @@
 //a simple character (mostly a leftover from when this was a roguelike project, but still used for player character)
 class Noob extends Character {
-    constructor(x, y, hp, direction, state, spritesheet, movement) {
-        super(x, y, hp, direction, state, spritesheet, movement);
+    constructor(x, y, direction, state, spritesheet) {
+        super(x, y, direction, state, spritesheet);
     }
 
     render(ctx, camera) {

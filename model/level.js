@@ -58,13 +58,8 @@ class Level {
             }
         }
 
-        const x = item.x;
-        const y = item.y;
-        const width = item.width;
-        const height = item.height;
-
         //clear from logic layer
-        this.tilemap.removeObstacle(x, y, width, height);
+        this.tilemap.removeObstacle(item.x, item.y, item.width, item.height);
     }
 
     //add value to given list and set the logic layer to 1 (occupied)
@@ -72,11 +67,6 @@ class Level {
         list.push(value);
 
         //add value to tilemap logic layer - collision
-        const x = value.x;
-        const y = value.y;
-        const width = value.width;
-        const height = value.height;
-
-        this.tilemap.addObstacle(x, y, width, height);
+        this.tilemap.addObstacle(value.x, value.y, value.width, value.height);
     }
 }
