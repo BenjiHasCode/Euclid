@@ -1,7 +1,7 @@
 class Player {
     constructor(character) {
         this.character = character;
-        this.interactTimer = Date.now() - 200; //to prevent the player from interacting with the door 5000 times a second
+        this.canInteract = true;
     }
 
     update(level) {
@@ -20,9 +20,9 @@ class Player {
         if (this.character.state == CharacterState.IDLE){
             //check interaction
             if (spacePressed) {
-                if(Date.now() - this.interactTimer >= 200) {
-                   this.character.interact(level);
-                   this.interactTimer = Date.now();
+                if(this.canInteract) {
+                    this.character.interact(level);
+                    this.canInteract = false;
                 }
             }
             //check move
@@ -38,6 +38,10 @@ class Player {
                 }
                 this.character.state = CharacterState.MOVE;
             }
+
+            //if space isn't pressed and the player can't interact - enable player to interact          
+            if(!this.canInteract && !spacePressed)
+                this.canInteract = true;
         }
     }
 
