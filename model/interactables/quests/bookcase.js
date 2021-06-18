@@ -15,7 +15,7 @@ class Bookcase extends Quest {
 
                 this.completed = true;
             } else {
-                d = new Dialogue("It Seems Like A Book Is \nMissing...", TextSpeed.FAST);
+                d = new Dialogue("It seems like a book is \nmissing...", TextSpeed.FAST);
                 gameState = GameState.DIALOGUE;
             }
         }

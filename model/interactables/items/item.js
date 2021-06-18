@@ -29,7 +29,7 @@ class ItemPickup extends Interactable{
     }
 
     interact() {
-        d = new Dialogue("You Picked Up \n\nA " + getItemName(this.id), TextSpeed.FAST);
+        d = new Dialogue("You picked up \n\na " + getItemName(this.id), TextSpeed.FAST);
         gameState = GameState.DIALOGUE;
 
         //return id to indicate what was picked up

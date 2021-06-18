@@ -7,7 +7,7 @@ class Well extends Quest{
     interact(character) {
         if(!this.completed) {
             if(character.hasItem(this.prerequisite)) {
-                const text = "You Applied The " + getItemName(this.prerequisite) + "\n\nYou Got A " + getItemName(this.reward);
+                const text = "You applied the " + getItemName(this.prerequisite) + "\n\nYou got a " + getItemName(this.reward);
                 d = new Dialogue(text, TextSpeed.FAST);
 
                 //remove item from character
@@ -21,7 +21,7 @@ class Well extends Quest{
                 //set quest to completed
                 this.completed = true;
             } else {
-                const text = "You See A Well\n...\n...But No " + getItemName(this.prerequisite);
+                const text = "You see a well\n...\n...but no " + getItemName(this.prerequisite);
                 d = new Dialogue(text, TextSpeed.FAST);
                 //play well sound
                 playSound("assets/audio/water_drip.mp3", 1);

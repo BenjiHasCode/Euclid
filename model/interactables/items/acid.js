@@ -8,7 +8,7 @@ class Acid extends ItemPickup {
 
     //returns id on interact so whatever interacts with it knows what it is
     interact() {
-        d = new Dialogue("You Picked Up \n\nA " + getItemName(this.id), TextSpeed.FAST);
+        d = new Dialogue("You picked up \n\na " + getItemName(this.id), TextSpeed.FAST);
         gameState = GameState.DIALOGUE;
         //play acid pickup sound
         playSound("assets/audio/bottle.mp3", 1);
