@@ -10,8 +10,9 @@ class Dialogue {
         this.message = message.split("\n");
         this.speed = speed;
         this.lastUpdate = Date.now();
-        this.index = 0; //we are at the start of text
-        this.skip = Date.now();
+        this.index = 0;         //we are at the start of text
+        this.skippable = false; //if true, the player can finish the text by pressing space
+        this.quitable = false;  //if true, the player can "quit" the message by pressing space
     }
 
     update() {
@@ -28,20 +29,27 @@ class Dialogue {
                 this.index++;
                 playSound("assets/audio/dialogue.mp3", 1);
             }
-
-            //check if player is trying to "skip" dialogue
-            if(spacePressed && Date.now() - this.skip > 100) {
-                if(this.index < messageLength) {
-                    this.index = messageLength;
-                    this.skip = Date.now();
-                } 
-                //if entire text is displayed, and space is pressed, exit dialogue
-                else { //TODO FIX LATER
-                    gameState = GameState.PLAY;
-                }
-            }
-
             this.lastUpdate = Date.now();
+        }
+
+        //check if player is trying to "skip" dialogue
+        if(!spacePressed && !this.skippable) {
+            this.skippable = true;  //we set it as skippable when the player lets go of space, so it doesn't instantly skip
+        }
+        //if player is pressing space midsentence and it is skippable, finish entire message
+        else if(spacePressed && this.skippable) {
+            if(this.index < messageLength) {
+                this.index = messageLength;
+            }
+        }
+
+        //if entire message is displayed and space isn't pressed set the message as quitable
+        if(!spacePressed && this.index == messageLength) {
+            this.quitable = true;
+        }
+        //if space is pressed and quitable - set gamestate to play
+        else if(spacePressed && this.quitable) {
+            gameState = GameState.PLAY;
         }
     }
 
@@ -60,13 +68,7 @@ class Dialogue {
 
         //draw text
         ctx.save();
-        let textSize;
-
-        
-        if (canvas.width * .8 < canvas.height * .1)
-            textSize = canvas.width * .8;
-        else
-            textSize = canvas.height * .1;
+        let textSize = canvas.height * .1;
         //define text info
         ctx.font = "bold " + textSize + "px Arial";
         ctx.textBaseline = "top";   //makes the text appear under the x, y coordinate (normally it appears above (which is problematic if the font size change))
@@ -76,17 +78,18 @@ class Dialogue {
         let tempDex = this.index;
         //write the strings
         for(let i = 0; i < this.message.length; i++) {
+            //if index is larger than current message length, write entire message
             if (this.tempDex >= this.message[i].length) {
-                ctx.fillText(this.message[i], dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
-               // this.tempDex -= this.message[i].length;
-            } else {
+                ctx.fillText(this.message[i], dX + dWidth * .1, dY + dWidth * .1 + i*textSize, canvas.width * .6);
+            } 
+            //if index is not larger than message length, make substring and print substring
+            else {
                 const partMessage = this.message[i].substring(0, tempDex);
-                ctx.fillText(partMessage, dX + dWidth * .1, dY + dWidth * .1 + i*textSize/*, canvas.width * .6*/);
+                ctx.fillText(partMessage, dX + dWidth * .1, dY + dWidth * .1 + i*textSize, canvas.width * .6);
             }
             tempDex -= this.message[i].length;
 
         }
-
         ctx.restore();
     }
 }
