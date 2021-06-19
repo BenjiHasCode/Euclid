@@ -150,7 +150,8 @@ function render(canvas, ctx, camera, player, level) {
         d.render(canvas, ctx);
     else if (gameState == GameState.OVER) {
         ctx.save();
-        ctx.font = "bold 1000px Arial";
+        const size = canvas.height*1.35;
+        ctx.font = "bold "+ size +"px Arial";
         ctx.textBaseline = "hanging";   //makes the text "hang" from the textbaseline (normally it appears above)
         ctx.fillStyle = "white";
         ctx.fillText("YOU WIN!", 0, 0, canvas.width);
