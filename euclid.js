@@ -122,8 +122,6 @@ function gameLoop(canvas, ctx, camera, player, level) {
     //else update dialogue message
     else if (gameState == GameState.DIALOGUE) {
         d.update();
-        if(gameState == GameState.PLAY)
-            player.interactTimer = Date.now();
     } 
     
     //draw
