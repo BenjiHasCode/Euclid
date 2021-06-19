@@ -3,20 +3,20 @@ class Teleporter extends Entity{
         super(x, y);
         this.width = width;
         this.height = height;
-        //teleportX, teleportY is where the player will be teleported to
+        //teleportX, teleportY is where the character will be teleported to
         this.teleportX = teleportX;
         this.teleportY = teleportY;
     }
 
-    update(player) {
-        const pX = player.getX();
-        const pY = player.getY();
+    update(character) {
+        const cX = character.getX();
+        const cY = character.getY();
 
-        //check if colliding with player
-        if (pX >= this.x && pX <= this.x+this.width-1 && pY >= this.y && pY <= this.y+this.height-1) {
+        //check if colliding with character
+        if (cX >= this.x && cX <= this.x+this.width-1 && cY >= this.y && cY <= this.y+this.height-1) {
             //teleport, baby!!!
-            player.setX(this.teleportX + pX - this.x);
-            player.setY(this.teleportY + pY - this.y);
+            character.setX(this.teleportX + cX - this.x);
+            character.setY(this.teleportY + cY - this.y);
         }
     }
 

@@ -16,10 +16,10 @@ class Level {
     }
 
 
-    update(player) {
-        //check if player is activating any of the teleporters
+    update(character) {
+        //check if player character is activating any of the teleporters
         this.teleporters.forEach(trigger => {
-            trigger.update(player);
+            trigger.update(character);
         });
     }
 

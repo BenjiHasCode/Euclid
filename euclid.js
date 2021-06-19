@@ -111,7 +111,7 @@ function gameLoop(canvas, ctx, camera, player, level) {
     //if gamestate is not dialogue - update game as normal
     if (gameState == GameState.PLAY) {
         //update level components - enemies, triggers and so on
-        level.update(player);
+        level.update(player.character);
 
         //update player
         player.update(level);
